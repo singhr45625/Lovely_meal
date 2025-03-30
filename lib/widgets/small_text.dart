@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 
-class BigText extends StatelessWidget {
+class SmallText extends StatelessWidget {
   Color? color;
   final String text;
   double size;
-  TextOverflow overFlow;
-  BigText({super.key, this.color = const Color(0xFF332d2b),
+  double height;
+  SmallText({super.key, this.color = const Color(0xFFcccc7c5),
     required this.text,
-    this.size = 20,
-    this.overFlow = TextOverflow.ellipsis
+    this.size = 12,
+    this.height = 1.2,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
-    text,
-      maxLines: 1,
-      overflow: overFlow,
+      text,
       style: TextStyle(
         color: color,
         fontSize: size,
-        fontWeight: FontWeight.w400,
         fontFamily: 'Roboto',
+        height: height,
       ),
     );
   }

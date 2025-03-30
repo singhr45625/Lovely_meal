@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lovelymeal/widgets/small_text.dart';
+import 'package:lovelymeal/widgets/Big_text.dart';
 import 'colors.dart';
 
 class MainFoodPage extends StatefulWidget {
@@ -22,14 +24,19 @@ class _MainFoodPageState extends State<MainFoodPage> {
                   children: [
                     Column(
                       children: [
-                        Text("Country"),
-                        Text('City'),
+                        BigText(text: "India", color: AppColors.mainColor,),
+                        Row(
+                          children: [
+                            SmallText(text: 'Phagwara', color: Colors.black,),
+                            Icon(Icons.arrow_drop_down_rounded)
+                          ],
+                        )
                       ],
                     ),
                     Container(
                       width: 45,
                       height: 45,
-                      child: Icon(Icons.search, color: Colors.white,),
+                      child: Icon(Icons.search, color: Colors.white),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: AppColors.mainColor,
