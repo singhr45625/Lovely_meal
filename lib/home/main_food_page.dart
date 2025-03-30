@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lovelymeal/home/food_page_body.dart';
 import 'package:lovelymeal/widgets/small_text.dart';
 import 'package:lovelymeal/widgets/Big_text.dart';
 import 'colors.dart';
@@ -44,7 +45,8 @@ class _MainFoodPageState extends State<MainFoodPage> {
                     )
                   ],
                 ),
-              )
+              ),
+              FoodPageBody(),
             ],
           ),
       );

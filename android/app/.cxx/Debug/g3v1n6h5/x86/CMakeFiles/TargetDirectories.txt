@@ -1,0 +1,2 @@
+C:/Users/kpuja/AndroidStudioProjects/lovelyMeal/android/app/.cxx/Debug/g3v1n6h5/x86/CMakeFiles/edit_cache.dir
+C:/Users/kpuja/AndroidStudioProjects/lovelyMeal/android/app/.cxx/Debug/g3v1n6h5/x86/CMakeFiles/rebuild_cache.dir
