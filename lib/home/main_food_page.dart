@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lovelymeal/home/food_page_body.dart';
 import 'package:lovelymeal/widgets/small_text.dart';
 import 'package:lovelymeal/widgets/Big_text.dart';
-import 'colors.dart';
+import '../utils/colors.dart';
 
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({super.key});
@@ -14,9 +14,11 @@ class MainFoodPage extends StatefulWidget {
 class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
+    print("Current height is${MediaQuery.of(context).size.height}");
     return  Scaffold(
           body: Column(
             children: [
+              //showing the header
               Container(
                 margin: EdgeInsets.only(top: 45, bottom: 15),
                 padding: EdgeInsets.only(left: 20, right: 20),
@@ -46,6 +48,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                   ],
                 ),
               ),
+              //showing the body
               FoodPageBody(),
             ],
           ),
