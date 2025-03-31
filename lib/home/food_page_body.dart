@@ -29,7 +29,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         borderRadius: BorderRadius.circular(30),
         color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
         image: DecorationImage(
-          image: AssetImage("assets/image/food02.jpg"),
+          image: AssetImage("assets/image/food01.png"),
           fit: BoxFit.cover,
         ),
       ),
