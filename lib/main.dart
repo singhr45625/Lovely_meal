@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelymeal/home/main_food_page.dart';
+import 'package:lovelymeal/utils/dimensions.dart'; // Import Dimensions
 
 void main() {
   runApp(const MyApp());
@@ -9,9 +10,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Dimensions.init(context); // Initialize Dimensions here!
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -23,4 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
