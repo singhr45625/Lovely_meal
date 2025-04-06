@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lovelymeal/utils/dimensions.dart';
 
 class BigText extends StatelessWidget {
   Color? color;
@@ -7,7 +8,7 @@ class BigText extends StatelessWidget {
   TextOverflow overFlow;
   BigText({super.key, this.color = const Color(0xFF332d2b),
     required this.text,
-    this.size = 20,
+    this.size = 0,
     this.overFlow = TextOverflow.ellipsis
   });
 
@@ -19,8 +20,8 @@ class BigText extends StatelessWidget {
       overflow: overFlow,
       style: TextStyle(
         color: color,
-        fontSize: size,
-        fontWeight: FontWeight.w400,
+        fontSize: size==0?Dimensions.font20:size,
+        fontWeight: FontWeight.w600,
         fontFamily: 'Roboto',
       ),
     );
