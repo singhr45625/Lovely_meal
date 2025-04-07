@@ -24,7 +24,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
     'Ludhiana',
     'Amritsar',
     'Chandigarh',
-    // Add more locations as needed
+
   ];
 
   @override
