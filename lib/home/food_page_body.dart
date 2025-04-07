@@ -375,6 +375,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                             text: "32min",
                             iconColor: AppColors.iconColor2),
                       ],
+                      
                     ),
                   ],
                 ),
