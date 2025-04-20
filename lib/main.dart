@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lovelymeal/home/main_food_page.dart';
-import 'package:lovelymeal/utils/dimensions.dart'; // Import Dimensions
+import 'package:lovelymeal/utils/dimensions.dart';
+import 'package:lovelymeal/home/login_screen.dart';// Import Dimensions
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainFoodPage(),
+      home: LoginScreen(),
     );
   }
 }
