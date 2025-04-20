@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Colors.deepOrange,
+                  color: Colors.teal,
                 ),
               ),
               const SizedBox(height: 40),
@@ -78,13 +78,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: ElevatedButton(
                   onPressed: _handleLogin,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepOrange,
+                    backgroundColor: Colors.teal,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: const Text(
                     "Login",
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18,
+                    color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -98,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: Text(
                   "Don't have an account? Sign up",
-                  style: TextStyle(color: Colors.deepOrange),
+                  style: TextStyle(color: Colors.teal),
                 ),
               ),
             ],

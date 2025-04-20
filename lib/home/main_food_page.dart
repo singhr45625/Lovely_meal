@@ -16,7 +16,8 @@ class _MainFoodPageState extends State<MainFoodPage> {
   final TextEditingController _searchController = TextEditingController();
   List<Product> _allProducts = [];
   List<Product> _searchResults = [];
-  String _selectedLocation = 'Phagwara'; // Default location
+  String _selectedLocation = 'Phagwara';
+  bool _showSearchBar = false;
 
   List<String> _locations = [
     'Phagwara',
@@ -24,7 +25,6 @@ class _MainFoodPageState extends State<MainFoodPage> {
     'Ludhiana',
     'Amritsar',
     'Chandigarh',
-
   ];
 
   @override
@@ -56,7 +56,6 @@ class _MainFoodPageState extends State<MainFoodPage> {
         rating: 4.9,
         comments: 4580,
       ),
-      // ... add all your products here
     ];
   }
 
@@ -71,8 +70,9 @@ class _MainFoodPageState extends State<MainFoodPage> {
   }
 
   void _clearSearch() {
-    _searchResults.clear();
     _searchController.clear();
+    _searchResults.clear();
+    _showSearchBar = false;
     setState(() {});
   }
 
@@ -89,7 +89,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                 setState(() {
                   _selectedLocation = _locations[index];
                 });
-                Navigator.pop(context); // Close the bottom sheet
+                Navigator.pop(context);
               },
             );
           },
@@ -106,11 +106,11 @@ class _MainFoodPageState extends State<MainFoodPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Current height is ${MediaQuery.of(context).size.height}");
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Top Header
             Container(
               margin: const EdgeInsets.only(top: 45, bottom: 15),
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -120,19 +120,30 @@ class _MainFoodPageState extends State<MainFoodPage> {
                   Column(
                     children: [
                       BigText(text: "India", color: AppColors.mainColor),
-                      InkWell( // Wrap the location Row in InkWell.
+                      InkWell(
                         onTap: () => _showLocationPicker(context),
                         child: Row(
                           children: [
-                            SmallText(text: _selectedLocation, color: Colors.black),
+                            SmallText(
+                              text: _selectedLocation,
+                              color: Colors.black,
+                            ),
                             const Icon(Icons.arrow_drop_down_rounded),
                           ],
                         ),
                       ),
                     ],
                   ),
+                  // Tap to toggle search bar
                   InkWell(
-                    onTap: _performSearch,
+                    onTap: () {
+                      setState(() {
+                        _showSearchBar = !_showSearchBar;
+                        if (!_showSearchBar) {
+                          _clearSearch();
+                        }
+                      });
+                    },
                     child: Container(
                       width: 45,
                       height: 45,
@@ -146,9 +157,38 @@ class _MainFoodPageState extends State<MainFoodPage> {
                 ],
               ),
             ),
+
+            // Show search bar if toggled
+            if (_showSearchBar)
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (value) => _performSearch(),
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: 'Search food...',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.clear),
+                      onPressed: _clearSearch,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                ),
+              ),
+
+            // Show results or default food page
             _searchResults.isNotEmpty
                 ? _buildSearchResults()
-                : FoodPageBody(),
+                : !_showSearchBar
+                ? FoodPageBody()
+                : const SizedBox(), // Hide when search is open but empty
           ],
         ),
       ),
@@ -157,76 +197,57 @@ class _MainFoodPageState extends State<MainFoodPage> {
 
   Widget _buildSearchResults() {
     return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+      children: List.generate(_searchResults.length, (index) {
+        Product product = _searchResults[index];
+        return Container(
+          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
           child: Row(
             children: [
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: _clearSearch,
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white38,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: AssetImage(product.imagePath),
+                  ),
+                ),
               ),
-              const Text('Search Results'),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        BigText(text: product.title),
+                        const SizedBox(height: 5),
+                        SmallText(
+                          text: product.description,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
-        ),
-        ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: _searchResults.length,
-          itemBuilder: (context, index) {
-            Product product = _searchResults[index];
-            return Container(
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-              child: Row(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white38,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(product.imagePath),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Container(
-                      height: 100,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BigText(text: product.title),
-                            SizedBox(height: 5),
-                            SmallText(
-                              text: product.description,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+        );
+      }),
     );
   }
 }
