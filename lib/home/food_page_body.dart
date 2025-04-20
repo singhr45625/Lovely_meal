@@ -6,6 +6,7 @@ import 'package:lovelymeal/utils/dimensions.dart';
 import 'package:lovelymeal/widgets/Big_text.dart';
 import 'package:lovelymeal/widgets/icon_and_text.dart';
 import 'package:lovelymeal/widgets/small_text.dart';
+import 'package:lovelymeal/models/product_detail_page.dart'; // import detail page
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
@@ -21,91 +22,103 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   List<Product> products = [
     Product(
-      imagePath: "assets/image/food01.png",
+      imagePath: "assets/image/chinese.jpg",
       title: "Chinese Side Dish",
-      description: "Delicious side dish from China.",
+      description:
+      "A savory and spicy side dish packed with authentic Chinese flavors. Best enjoyed with noodles or rice, made with freshly tossed vegetables, soy sauce, and a hint of garlic.",
       rating: 4.5,
       comments: 1287,
+      price: 149.0,
+      calories: 350,
+      distance: "1.7 km",
+      time: "32 min",
     ),
     Product(
-      imagePath: "assets/image/4783666.jpg",
-      title: "Italian Pasta",
-      description: "Authentic Italian pasta.",
+      imagePath: "assets/image/italian.jpg",
+      title: "Classic Italian Pasta",
+      description:
+      "Traditional Italian penne pasta tossed in a creamy Alfredo sauce with herbs and grilled veggies. Topped with parmesan cheese.",
       rating: 4.8,
-      comments: 2000,
+      comments: 1764,
+      price: 249.0,
+      calories: 450,
+      distance: "1.3 km",
+      time: "30 min",
     ),
     Product(
-      imagePath: "assets/image/11949.jpg",
-      title: "Indian Thali",
-      description: "Desi Tasty Indian Thali",
+      imagePath: "assets/image/indian.webp",
+      title: "South Indian Thali",
+      description:
+      "A healthy and satisfying thali consisting of idli, dosa, sambhar, chutneys, and curd rice. Made with traditional South Indian spices.",
+      rating: 4.6,
+      comments: 1452,
+      price: 179.0,
+      calories: 520,
+      distance: "0.9 km",
+      time: "28 min",
+    ),
+    Product(
+      imagePath: "assets/image/rajma.jpg",
+      title: "Punjabi Rajma Chawal",
+      description:
+      "Delicious kidney beans slow-cooked in rich tomato gravy and served with steamed basmati rice. A comfort food favorite.",
+      rating: 4.4,
+      comments: 987,
+      price: 139.0,
+      calories: 470,
+      distance: "1.5 km",
+      time: "35 min",
+    ),
+    Product(
+      imagePath: "assets/image/pizza.webp",
+      title: "Farmhouse Pizza",
+      description:
+      "Wood-fired pizza loaded with bell peppers, olives, sweet corn, mushrooms, and mozzarella cheese on a thin crust.",
       rating: 4.9,
-      comments: 4580,
-    ),
-    Product(
-      imagePath: "assets/image/tacos.jpg",
-      title: "Tacos",
-      description: "Authentic western dish",
-      rating: 4.8,
-      comments: 2000,
-    ),
-    Product(
-      imagePath: "assets/image/6606243.jpg",
-      title: "Kadhi",
-      description: "Beautiful and delicius kadhi",
-      rating: 4.8,
-      comments: 2000,
+      comments: 2230,
+      price: 299.0,
+      calories: 780,
+      distance: "2.8 km",
+      time: "40 min",
     ),
   ];
 
   List<Product> popularProducts = [
     Product(
-      imagePath: "assets/image/11949.jpg",
-      title: "Popular Dish 1",
-      description: "Highly rated dish.",
-      rating: 4.9,
-      comments: 3000,
-    ),
-    Product(
-      imagePath: "assets/image/4831379.jpg",
-      title: "Popular Dish 2",
-      description: "Another popular choice.",
-      rating: 4.7,
-      comments: 2500,
-    ),
-    Product(
-      imagePath: "assets/image/4831379.jpg",
-      title: "Popular Dish 3",
-      description: "A very delicious dish.",
+      imagePath: "assets/image/indian.webp",
+      title: "South Indian Thali",
+      description:
+      "A healthy and satisfying thali consisting of idli, dosa, sambhar, chutneys, and curd rice. Made with traditional South Indian spices.",
       rating: 4.6,
-      comments: 2200,
+      comments: 1452,
+      price: 179.0,
+      calories: 520,
+      distance: "0.9 km",
+      time: "28 min",
     ),
     Product(
-      imagePath: "assets/image/tacos.jpg",
-      title: "Popular Tacos",
-      description: "Mexican style tacos.",
+      imagePath: "assets/image/biryani.jpg",
+      title: "Hyderabadi Biryani",
+      description:
+      "Aromatic basmati rice layered with tender chicken marinated in traditional spices, slow-cooked for rich flavor and texture.",
       rating: 4.8,
-      comments: 2800,
+      comments: 2410,
+      price: 259.0,
+      calories: 640,
+      distance: "2.0 km",
+      time: "38 min",
     ),
     Product(
-      imagePath: "assets/image/food01.png",
-      title: "Popular Chinese",
-      description: "Popular chinese dish.",
-      rating: 4.5,
-      comments: 1800,
-    ),
-    Product(
-      imagePath: "assets/image/6606243.jpg",
-      title: "Popular Kadhi",
-      description: "Another popular Kadhi.",
-      rating: 4.9,
-      comments: 3200,
-    ),
-    Product(
-      imagePath: "assets/image/4783666.jpg",
-      title: "Popular Pasta",
-      description: "Italian pasta.",
+      imagePath: "assets/image/dessert.webp",
+      title: "Gulab Jamun with Rabri",
+      description:
+      "Soft khoya balls dipped in sugar syrup and served with thick creamy rabri. A perfect Indian dessert to end your meal.",
       rating: 4.7,
-      comments: 2600,
+      comments: 1120,
+      price: 119.0,
+      calories: 300,
+      distance: "1.2 km",
+      time: "20 min",
     ),
   ];
 
@@ -138,7 +151,18 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   controller: pageController,
                   itemCount: products.length,
                   itemBuilder: (context, position) {
-                    return _buildPageItem(position);
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                ProductDetailPage(product: products[position]),
+                          ),
+                        );
+                      },
+                      child: _buildPageItem(position),
+                    );
                   },
                 ),
               ),
@@ -147,8 +171,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 position: _currPageValue,
                 decorator: DotsDecorator(
                   activeColor: AppColors.mainColor,
-                  size: Size.square(9.0),
-                  activeSize: Size(18.0, 9.0),
+                  size: const Size.square(9.0),
+                  activeSize: const Size(18.0, 9.0),
                   activeShape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.0)),
                 ),
@@ -158,8 +182,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         ),
         SizedBox(height: Dimensions.height30()),
         Padding(
-          padding: EdgeInsets.only(
-              left: Dimensions.width20(), right: Dimensions.width20()),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.width20()),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -179,43 +202,52 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         ),
         SizedBox(height: Dimensions.height10()),
         SizedBox(
-          height: Dimensions.listViewTextContSize() * 7, // Adjusted to 7 items.
+          height: Dimensions.listViewTextContSize() * 6.5,
           child: ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             itemCount: popularProducts.length,
             itemBuilder: (context, index) {
               Product product = popularProducts[index];
-              return Container(
-                margin: EdgeInsets.only(
-                    left: Dimensions.width20(),
-                    right: Dimensions.width20(),
-                    bottom: Dimensions.height10()),
-                child: Row(
-                  children: [
-                    Container(
-                      width: Dimensions.listViewImgSize(),
-                      height: Dimensions.listViewImgSize(),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.radius20()),
-                        color: Colors.white38,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(product.imagePath),
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailPage(product: product),
+                    ),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: Dimensions.width20(),
+                      vertical: Dimensions.height10() / 2),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: Dimensions.listViewImgSize(),
+                        height: Dimensions.listViewImgSize(),
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.circular(Dimensions.radius20()),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(product.imagePath),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: Dimensions.width10()),
-                    Expanded(
-                      child: Container(
-                        height: Dimensions.listViewTextContSize(),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(Dimensions.radius20()),
-                            bottomRight: Radius.circular(Dimensions.radius20()),
+                      SizedBox(width: Dimensions.width10()),
+                      Expanded(
+                        child: Container(
+                          height: Dimensions.listViewTextContSize(),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight:
+                              Radius.circular(Dimensions.radius20()),
+                              bottomRight:
+                              Radius.circular(Dimensions.radius20()),
+                            ),
                           ),
-                          color: Colors.white,
-                        ),
-                        child: Padding(
                           padding: EdgeInsets.all(Dimensions.width10()),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -224,38 +256,33 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                               BigText(text: product.title),
                               SizedBox(height: Dimensions.height10()),
                               SmallText(
-                                  text: product.description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis),
+                                text: product.description,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                               SizedBox(height: Dimensions.height10()),
                               Row(
                                 children: [
-                                  Expanded(
-                                    child: IconAndTextWidget(
-                                        icon: Icons.circle_sharp,
-                                        text: "Normal",
-                                        iconColor: AppColors.iconColor1),
-                                  ),
-                                  Expanded(
-                                    child: IconAndTextWidget(
-                                        icon: Icons.location_on,
-                                        text: "1.7km",
-                                        iconColor: AppColors.mainColor),
-                                  ),
-                                  Expanded(
-                                    child: IconAndTextWidget(
-                                        icon: Icons.access_time_rounded,
-                                        text: "32min",
-                                        iconColor: AppColors.iconColor2),
-                                  ),
+                                  IconAndTextWidget(
+                                      icon: Icons.circle,
+                                      text: "Normal",
+                                      iconColor: AppColors.iconColor1),
+                                  IconAndTextWidget(
+                                      icon: Icons.location_on,
+                                      text: "1.7km",
+                                      iconColor: AppColors.mainColor),
+                                  IconAndTextWidget(
+                                      icon: Icons.access_time_rounded,
+                                      text: "32min",
+                                      iconColor: AppColors.iconColor2),
                                 ],
                               ),
                             ],
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
@@ -297,11 +324,9 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           Container(
             height: Dimensions.pageViewContainer(),
-            margin: EdgeInsets.only(
-                left: Dimensions.width10(), right: Dimensions.width10()),
+            margin: EdgeInsets.symmetric(horizontal: Dimensions.width10()),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Dimensions.radius30()),
-              color: index.isEven ? Color(0xFF69c5df) : Color(0xFF9294cc),
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage(product.imagePath),
@@ -314,71 +339,61 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             bottom: Dimensions.height10(),
             child: Container(
               height: Dimensions.pageViewTextContainer(),
-              margin: EdgeInsets.only(
-                left: Dimensions.width30(),
-                right: Dimensions.width30(),
-              ),
+              margin: EdgeInsets.symmetric(horizontal: Dimensions.width30()),
+              padding: EdgeInsets.all(Dimensions.height15()),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius20()),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFFe8e8e8),
-                    blurRadius: 5.0,
-                    offset: Offset(0, 5),
-                  ),
+                      color: Color(0xFFe8e8e8),
+                      blurRadius: 5.0,
+                      offset: Offset(0, 5)),
                   BoxShadow(color: Colors.white, offset: Offset(-5, 0)),
                   BoxShadow(color: Colors.white, offset: Offset(5, 0)),
                 ],
               ),
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: Dimensions.height15(),
-                    left: Dimensions.width15(),
-                    right: Dimensions.width15()),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    BigText(text: product.title),
-                    SizedBox(height: Dimensions.height10()),
-                    Row(
-                      children: [
-                        Wrap(
-                          children: List.generate(
-                            5,
-                                (index) => Icon(Icons.star,
-                                color: AppColors.mainColor, size: 15),
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BigText(text: product.title),
+                  SizedBox(height: Dimensions.height10()),
+                  Row(
+                    children: [
+                      Wrap(
+                        children: List.generate(
+                          5,
+                              (_) => Icon(Icons.star,
+                              color: AppColors.mainColor, size: 15),
                         ),
-                        SizedBox(width: 10),
-                        SmallText(text: product.rating.toString()),
-                        SizedBox(width: 10),
-                        SmallText(text: product.comments.toString()),
-                        SizedBox(width: 10),
-                        SmallText(text: "comments"),
-                      ],
-                    ),
-                    SizedBox(height: Dimensions.height20()),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconAndTextWidget(
-                            icon: Icons.circle_sharp,
-                            text: "Normal",
-                            iconColor: AppColors.iconColor1),
-                        IconAndTextWidget(
-                            icon: Icons.location_on,
-                            text: "1.7km",
-                            iconColor: AppColors.mainColor),
-                        IconAndTextWidget(
-                            icon: Icons.access_time_rounded,
-                            text: "32min",
-                            iconColor: AppColors.iconColor2),
-                      ],
-                      
-                    ),
-                  ],
-                ),
+                      ),
+                      SizedBox(width: 10),
+                      SmallText(text: product.rating.toString()),
+                      SizedBox(width: 10),
+                      SmallText(text: product.comments.toString()),
+                      SizedBox(width: 10),
+                      SmallText(text: "comments"),
+                    ],
+                  ),
+                  SizedBox(height: Dimensions.height20()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconAndTextWidget(
+                          icon: Icons.circle_sharp,
+                          text: "Normal",
+                          iconColor: AppColors.iconColor1),
+                      IconAndTextWidget(
+                          icon: Icons.location_on,
+                          text: "1.7km",
+                          iconColor: AppColors.mainColor),
+                      IconAndTextWidget(
+                          icon: Icons.access_time_rounded,
+                          text: "32min",
+                          iconColor: AppColors.iconColor2),
+                    ],
+                  )
+                ],
               ),
             ),
           ),

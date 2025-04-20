@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lovelymeal/home/food_page_body.dart';
 import 'package:lovelymeal/widgets/small_text.dart';
-import 'package:lovelymeal/widgets/Big_text.dart';
-import '../utils/colors.dart';
-import '../models/product.dart';
+import 'package:lovelymeal/widgets/big_text.dart';
+import 'package:lovelymeal/utils/colors.dart';
+import 'package:lovelymeal/models/product.dart';
+import 'package:lovelymeal/models/cart_page.dart';
+import 'package:lovelymeal/models/product_detail_page.dart'; // Import ProductDetailPage
+import 'package:provider/provider.dart';
+import '../home/food_page_body.dart';
+import '../utils/dimensions.dart';
 
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({super.key});
@@ -19,7 +23,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
   String _selectedLocation = 'Phagwara';
   bool _showSearchBar = false;
 
-  List<String> _locations = [
+  final List<String> _locations = [
     'Phagwara',
     'Jalandhar',
     'Ludhiana',
@@ -31,6 +35,10 @@ class _MainFoodPageState extends State<MainFoodPage> {
   void initState() {
     super.initState();
     _allProducts = _getAllProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Dimensions.init(context);
+      print("Dimensions initialized in MainFoodPage: screenHeight=${Dimensions.screenHeight}, screenWidth=${Dimensions.screenWidth}");
+    });
   }
 
   List<Product> _getAllProducts() {
@@ -38,34 +46,52 @@ class _MainFoodPageState extends State<MainFoodPage> {
       Product(
         imagePath: "assets/image/food01.png",
         title: "Chinese Side Dish",
-        description: "Delicious side dish from China.",
+        description: "Delicious spicy side dish from China.",
         rating: 4.5,
         comments: 1287,
+        price: 149.0,
+        calories: 320,
+        distance: "1.2 km",
+        time: "25 min",
       ),
       Product(
         imagePath: "assets/image/4783666.jpg",
         title: "Italian Pasta",
-        description: "Authentic Italian pasta.",
+        description: "Authentic creamy Alfredo Italian pasta.",
         rating: 4.8,
         comments: 2000,
+        price: 229.0,
+        calories: 480,
+        distance: "2.0 km",
+        time: "30 min",
       ),
       Product(
         imagePath: "assets/image/11949.jpg",
         title: "Indian Thali",
-        description: "Desi Tasty Indian Thali",
+        description: "Desi-style thali with roti, sabzi, rice & more.",
         rating: 4.9,
         comments: 4580,
+        price: 199.0,
+        calories: 550,
+        distance: "1.5 km",
+        time: "35 min",
       ),
     ];
   }
 
   void _performSearch() {
-    String searchText = _searchController.text.toLowerCase();
-    _searchResults = _allProducts
-        .where((product) =>
-    product.title.toLowerCase().contains(searchText) ||
-        product.description.toLowerCase().contains(searchText))
-        .toList();
+    final searchText = _searchController.text.trim().toLowerCase();
+
+    if (searchText.isEmpty) {
+      _searchResults = [];
+    } else {
+      _searchResults = _allProducts
+          .where((product) =>
+      product.title.toLowerCase().contains(searchText) ||
+          product.description.toLowerCase().contains(searchText))
+          .toList();
+    }
+
     setState(() {});
   }
 
@@ -88,6 +114,8 @@ class _MainFoodPageState extends State<MainFoodPage> {
               onTap: () {
                 setState(() {
                   _selectedLocation = _locations[index];
+                  _allProducts = _getAllProducts();
+                  _searchResults = [];
                 });
                 Navigator.pop(context);
               },
@@ -110,7 +138,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Top Header
+            // Location and Search Icon
             Container(
               margin: const EdgeInsets.only(top: 45, bottom: 15),
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -134,11 +162,11 @@ class _MainFoodPageState extends State<MainFoodPage> {
                       ),
                     ],
                   ),
-                  // Tap to toggle search bar
                   InkWell(
                     onTap: () {
                       setState(() {
                         _showSearchBar = !_showSearchBar;
+                        _searchResults.clear();
                         if (!_showSearchBar) {
                           _clearSearch();
                         }
@@ -158,11 +186,10 @@ class _MainFoodPageState extends State<MainFoodPage> {
               ),
             ),
 
-            // Show search bar if toggled
+            // Search Bar
             if (_showSearchBar)
               Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: TextField(
                   controller: _searchController,
                   onChanged: (value) => _performSearch(),
@@ -183,14 +210,25 @@ class _MainFoodPageState extends State<MainFoodPage> {
                 ),
               ),
 
-            // Show results or default food page
-            _searchResults.isNotEmpty
-                ? _buildSearchResults()
-                : !_showSearchBar
-                ? FoodPageBody()
-                : const SizedBox(), // Hide when search is open but empty
+            // Results or Body
+            if (_searchResults.isNotEmpty)
+              _buildSearchResults()
+            else
+              const FoodPageBody(), // Assuming FoodPageBody displays the main product list
           ],
         ),
+      ),
+
+      // 🛒 Floating Cart Button
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.mainColor,
+        child: const Icon(Icons.shopping_cart),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CartPage()),
+          );
+        },
       ),
     );
   }
@@ -199,52 +237,64 @@ class _MainFoodPageState extends State<MainFoodPage> {
     return Column(
       children: List.generate(_searchResults.length, (index) {
         Product product = _searchResults[index];
-        return Container(
-          margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-          child: Row(
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white38,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(product.imagePath),
-                  ),
-                ),
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetailPage(product: product),
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Container(
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+            child: Row(
+              children: [
+                // Image
+                Container(
+                  width: 100,
                   height: 100,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BigText(text: product.title),
-                        const SizedBox(height: 5),
-                        SmallText(
-                          text: product.description,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white38,
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage(product.imagePath),
                     ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                // Title and Description
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        bottomRight: Radius.circular(20),
+                      ),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          BigText(text: product.title),
+                          const SizedBox(height: 5),
+                          SmallText(
+                            text: product.description,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       }),

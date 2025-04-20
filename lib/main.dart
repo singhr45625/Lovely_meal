@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:lovelymeal/models/cart_controller.dart';
+import 'package:lovelymeal/home/login_screen.dart';
 import 'package:lovelymeal/home/main_food_page.dart';
 import 'package:lovelymeal/utils/dimensions.dart';
-import 'package:lovelymeal/home/login_screen.dart';// Import Dimensions
 
 void main() {
   runApp(const MyApp());
@@ -13,16 +14,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Dimensions.init(context); // Initialize Dimensions here!
-
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartController()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Lovely Meal',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const AppRoot(),
       ),
-      home: LoginScreen(),
     );
+  }
+}
+
+class AppRoot extends StatefulWidget {
+  const AppRoot({super.key});
+
+  @override
+  _AppRootState createState() => _AppRootState();
+}
+
+class _AppRootState extends State<AppRoot> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Dimensions.init(context);
+      print("Dimensions initialized in AppRoot: screenHeight=${Dimensions.screenHeight}, screenWidth=${Dimensions.screenWidth}");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const LoginScreen(); // Or your initial screen logic
   }
 }
