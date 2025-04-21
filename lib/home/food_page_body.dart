@@ -120,6 +120,70 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       distance: "1.2 km",
       time: "20 min",
     ),
+    Product(
+      imagePath: "assets/image/paneer.jpg",
+      title: "Paneer Butter Masala",
+      description:
+      "Creamy and flavorful curry made with paneer cubes simmered in buttery tomato gravy, seasoned with Indian spices.",
+      rating: 4.5,
+      comments: 1783,
+      price: 199.0,
+      calories: 560,
+      distance: "1.5 km",
+      time: "30 min",
+    ),
+
+    Product(
+      imagePath: "assets/image/chole-bhature.jpg",
+      title: "Chole Bhature",
+      description:
+      "A North Indian classic of spicy chickpea curry served with deep-fried fluffy bhature. A fulfilling and tasty combo.",
+      rating: 4.4,
+      comments: 1590,
+      price: 149.0,
+      calories: 690,
+      distance: "0.8 km",
+      time: "25 min",
+    ),
+
+    Product(
+      imagePath: "assets/image/momos.jpg",
+      title: "Steamed Veg Momos",
+      description:
+      "Delicious Tibetan dumplings filled with fresh vegetables, served with spicy red chutney. A popular street food snack.",
+      rating: 4.3,
+      comments: 980,
+      price: 99.0,
+      calories: 280,
+      distance: "1.1 km",
+      time: "18 min",
+    ),
+
+    Product(
+      imagePath: "assets/image/rajma.jpg",
+      title: "Rajma Chawal",
+      description:
+      "Comfort food made with red kidney beans cooked in a spiced gravy served over hot steamed rice. A Punjabi favorite!",
+      rating: 4.6,
+      comments: 1345,
+      price: 139.0,
+      calories: 510,
+      distance: "1.3 km",
+      time: "26 min",
+    ),
+
+    Product(
+      imagePath: "assets/image/icecream.jpg",
+      title: "Kulfi Falooda",
+      description:
+      "A rich and creamy traditional Indian ice cream topped with falooda noodles, rose syrup, and dry fruits. A refreshing treat!",
+      rating: 4.7,
+      comments: 1224,
+      price: 129.0,
+      calories: 350,
+      distance: "2.1 km",
+      time: "22 min",
+    ),
   ];
 
   @override

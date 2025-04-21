@@ -44,7 +44,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
   List<Product> _getAllProducts() {
     return [
       Product(
-        imagePath: "assets/image/food01.png",
+        imagePath: "assets/image/chinese.jpg",
         title: "Chinese Side Dish",
         description: "Delicious spicy side dish from China.",
         rating: 4.5,
@@ -55,7 +55,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
         time: "25 min",
       ),
       Product(
-        imagePath: "assets/image/4783666.jpg",
+        imagePath: "assets/image/italian.jpg",
         title: "Italian Pasta",
         description: "Authentic creamy Alfredo Italian pasta.",
         rating: 4.8,
@@ -66,8 +66,8 @@ class _MainFoodPageState extends State<MainFoodPage> {
         time: "30 min",
       ),
       Product(
-        imagePath: "assets/image/11949.jpg",
-        title: "Indian Thali",
+        imagePath: "assets/image/indian.jpg",
+        title: "South Indian Thali",
         description: "Desi-style thali with roti, sabzi, rice & more.",
         rating: 4.9,
         comments: 4580,
