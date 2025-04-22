@@ -66,7 +66,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
         time: "30 min",
       ),
       Product(
-        imagePath: "assets/image/indian.jpg",
+        imagePath: "assets/image/indian.webp",
         title: "South Indian Thali",
         description: "Desi-style thali with roti, sabzi, rice & more.",
         rating: 4.9,
